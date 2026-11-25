@@ -122,3 +122,57 @@
   .about, .contact { width: 94%; }
   .about > .wrap, .contact > .wrap { width: 90%; }
 }
+
+/* The solid fills remain legible when backdrop filters are unavailable. */
+body:not(.demo-page) > .nav {
+  position: sticky;
+  top: 10px;
+  z-index: 5;
+  margin-block: 14px 0;
+  min-height: 68px;
+  padding: 10px clamp(14px, 2vw, 28px);
+  border: 1px solid rgba(147, 164, 153, .48);
+  border-radius: 22px;
+  background: #f9fbf8;
+  box-shadow: inset 0 1px 0 #fff, 0 10px 28px -22px #23382e;
+}
+html { scroll-padding-top: 98px; }
+.cover-foot {
+  left: 4%;
+  right: 4%;
+  bottom: 4%;
+  padding: 12px 16px;
+  border: 1px solid rgba(220, 234, 255, .4);
+  border-radius: 14px;
+  background: #304eb9;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.17);
+}
+.pricing {
+  position: relative;
+  isolation: isolate;
+}
+.pricing::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 14% -3% 4%;
+  pointer-events: none;
+  border-radius: var(--surface-radius);
+  background: radial-gradient(ellipse at 18% 55%, rgba(165,190,248,.62), transparent 45%),
+              radial-gradient(ellipse at 82% 52%, rgba(176,218,198,.72), transparent 46%);
+}
+.plan { box-shadow: inset 0 1px 0 #fff, var(--surface-shadow); }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body:not(.demo-page) > .nav, .cover-foot, .plan {
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+  body:not(.demo-page) > .nav { background: rgba(250, 252, 248, .82); }
+  .cover-foot { background: rgba(27, 48, 139, .52); }
+  .plan { background: rgba(255, 255, 255, .62); }
+}
+@media (max-width: 760px) {
+  body:not(.demo-page) > .nav { position: relative; top: 0; }
+  html { scroll-padding-top: 20px; }
+  .cover-foot { padding: 8px 12px; }
+}
